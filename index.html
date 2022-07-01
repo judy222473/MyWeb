@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+        rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+
+    <script src="https://unpkg.com/vue@next"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+
+    <style>
+        * {
+            padding: 0px;
+            margin: 0px;
+            box-sizing: border-box;
+            font-family: 'Roboto', sans-serif;
+
+        }
+        body{
+            min-width: 100vw;
+            height: 100vh;
+        }
+        #app {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-width: 100vw;
+            height: 100vh;
+            padding:20px;
+        }
+
+        .square {
+            aspect-ratio: 1/1;
+            border: 1px solid rgb(200, 200, 200);
+            border-radius: 2%;
+            box-shadow: 20px 20px 20px 0px rgb(200, 200, 200);
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .bit-wrapper {
+            width: calc(100%/3);
+            height: calc(100%/3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            border: 2px solid black;
+        }
+        .bit-outer {
+            width: calc(100%/3);
+            height: calc(100%/3);
+            position: relative;
+            border: 2px solid rgb(200,200,200);
+
+        }
+        .bit-select {
+            width:100%;
+            height: 100%;
+            position: absolute;
+            font-size: 30px;
+            font-weight: 700;
+            -webkit-appearance: none !important;
+            -moz-appearance: none !important;
+            appearance: none !important;
+            padding: 0px;
+            opacity: 0;
+            text-align: center;
+        }
+        .bit-div{
+            width:100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            font-weight: 700;
+            flex-wrap: wrap;
+            text-align: center;
+            -webkit-appearance: none !important;
+            -moz-appearance: none !important;
+            appearance: none !important;
+            padding: 0px;
+
+        }
+
+        .bit-hover:hover {
+            border: 2px solid black;
+        }
+
+        .AnsSquare{
+            background:rgb(220, 220, 220);
+        }
+        .ErrorAns{
+            background: #ffa69e;
+        }
+        .ShuffleLoading{
+            background: rgba(50,50,50,0.25);
+            backdrop-filter:  blur(5px);
+            z-index: 999;
+        }
+   
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <div class="w-100 d-flex flex-column justify-content-center align-items-center">
+            <div class="row align-items-center">
+                <div class="col-4  p-2">
+                    <button class="btn btn-primary fw-semibold " @click="Randon()">
+                        Shuffle
+                    </button>
+                </div>
+
+                <div class="col-4  p-2" >
+                    <select v-model="ShuffleNum" class="form-select">
+                        <option v-for="i in 55" :value="27+(i-1)">{{ 27+(i-1) }}</option>
+                    </select>
+                </div>
+             
+                <div class="col-4 p-2">
+                    <button class="btn btn-success fw-semibold" @click="DFSAns(0,0)">
+                        DFSAns
+                    </button>
+                </div>
+
+
+
+            </div>
+
+            <div class="square my-2 position-relative col-12 col-sm-10 col-md-8 col-lg-6 col-xl-4">
+                
+                <div class="h-100 w-100 position-absolute ShuffleLoading" style="display: flex;" v-show="Randing">
+                    <div 
+                        class="spinner-border text-primary mx-auto my-auto" 
+                        role="status"
+                    >
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>   
+                <template v-for="i in 3">
+                    <div class="bit-wrapper" v-for="j in 3">
+                        <template v-for="k in 9">
+                                <div class="bit-outer bit-hover bit-focus">
+                                    <select 
+                                        class="bit-select"
+                                        :value="square[ (i-1)*3 + (((k-1)/3) | 0 ) ][ (j-1)*3 + ((k-1)%3) ]"
+                                        @change="SudoChange(i , j , k , $event.target.value)"
+                                        v-if="AnsSquare[ (i-1)*3 + (((k-1)/3) | 0 ) ][ (j-1)*3 + ((k-1)%3) ]"
+                                    >
+                                        <option></option>
+
+                                        <option v-for="m in 9" :value.number="m" >{{ m }}</option>
+                                    <select>
+                                    <div 
+                                        class="bit-div " 
+                                        :class="{
+                                            'ErrorAns':IsRepeat( (i-1)*3 + (((k-1)/3) | 0 ) , (j-1)*3 + ((k-1)%3) ) ,
+                                            'AnsSquare':AnsSquare[ (i-1)*3 + (((k-1)/3) | 0 ) ][ (j-1)*3 + ((k-1)%3) ] ,
+                                        }"
+                                    >
+                                        {{ square[ (i-1)*3 + (((k-1)/3) | 0 ) ][ (j-1)*3 + ((k-1)%3) ] }}
+                                    </div>
+
+
+
+                                </div>
+
+
+
+
+                        </template>
+
+
+                    </div>
+                </template>
+            </div>
+        </div>
+        <!-- Modal -->
+        <div class="modal modal-sm fade" id="Win" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="WinLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header ">
+                        <h5 class="modal-title fw-semibold fs-4" id="WinLabel">Tip</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body ">
+                        <span class="text-success fs-5">Win!</span>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+    <script>
+        const WinModal = new bootstrap.Modal('#Win');
+
+        Vue.createApp({
+            data() {
+                return {
+                    square: [
+                        [5, 3, 4, 6, 7, 8, 9, 1, 2],
+                        [6, 7, 2, 1, 9, 5, 3, 4, 8],
+                        [1, 9, 8, 3, 4, 2, 5, 6, 7],
+                        [8, 5, 9, 7, 6, 1, 4, 2, 3],
+                        [4, 2, 6, 8, 5, 3, 7, 9, 1],
+                        [7, 1, 3, 9, 2, 4, 8, 5, 6],
+                        [9, 6, 1, 5, 3, 7, 2, 8, 4],
+                        [2, 8, 7, 4, 1, 9, 6, 3, 5],
+                        [3, 4, 5, 2, 8, 6, 1, 7, 9]
+                    ],
+                    AnsSquare:[
+                        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                    ],
+                    ShuffleNum: 40,
+                    Randing:false,
+                    RowCount: [...new Array(9)].map((arr) => {
+                        return new Array(10).fill(0);
+                    }),
+                    ColCount: [...new Array(9)].map((arr) => {
+                        return new Array(10).fill(0);
+                    }),
+                    SquareCount: [...new Array(9)].map((arr) => {
+                        return new Array(10).fill(0);
+                    })
+                }
+            },
+
+            created(){
+                for(let i =0;i<9;i++){
+                    for(let j = 0;j<9;j++){
+                        this.UpdateCount( i,j,"",this.square[i][j] );
+                    }
+                }
+            },
+            methods: {
+                IsRepeat(i,j){
+                    let num = this.square[i][j];
+
+                    let Row = this.RowCount[i][num] > 1;
+                    let Col = this.ColCount[j][num] > 1;
+                    let Square = this.SquareCount[parseInt(i / 3) * 3 + parseInt(j / 3)][num] > 1;
+
+                    // let Row = this.RowCount[i].some((num) => {
+                    //     return num > 1;
+                    // });                        
+                    // let Col = this.ColCount[j].some((num) => {
+                    //     return num > 1;
+                    // });                        
+                    // let Square = this.SquareCount[parseInt(i / 3) * 3 + parseInt(j / 3)].some((num) => {
+                    //     return num > 1;
+                    // });
+                    return Row || Col || Square;
+                },
+                SudoChange(i,j,k,after_num){
+                    let new_i = (i-1)*3 + (((k-1)/3) | 0 ) 
+                    let new_j = (j-1)*3 + ((k-1)%3) 
+                    let before_num = this.square[new_i][new_j];
+                    this.UpdateCount(new_i,new_j,before_num,after_num);
+                    this.square[new_i][new_j] = after_num;
+
+
+                    for(let i = 0 ;i<9;i++){
+                        for(let num = 1;num<10;num++){
+                            if( 
+                                this.RowCount[i][num]!=1 || 
+                                this.ColCount[i][num]!=1 ||
+                                this.SquareCount[i][num]!=1
+                            ){
+                                return;
+                            }
+                        }
+                    }
+                    WinModal.show();
+                },
+                UpdateCount(i,j,before_num,after_num) {
+                    if( after_num !="" ){
+                        this.RowCount[i][after_num]++;
+                        this.ColCount[j][after_num]++;
+                        this.SquareCount[parseInt(i / 3) * 3 + parseInt(j / 3)][after_num]++;
+                    }
+                    if( before_num !="" ){
+                        this.RowCount[i][before_num]--;
+                        this.ColCount[j][before_num]--;
+                        this.SquareCount[parseInt(i / 3) * 3 + parseInt(j / 3)][before_num]--;
+                    }
+                },
+                DFSGenerate (i , j){
+                    if( i == 9 ){
+                        return true;
+                    }
+                    if( this.square[i][j]=='' ){
+                        for( let num = 1;num<10;num++ ){
+                            //檢查是否有重複，不能使用isRepeat，因為用途不同，那是拿來檢測一整排的，效能差
+                            if( 
+                                this.RowCount[i][num]!=0 || 
+                                this.ColCount[j][num]!=0 || 
+                                this.SquareCount[parseInt(i / 3) * 3 + parseInt(j / 3)][num]!=0
+                            ){
+                                continue;
+                            }
+                            this.square[i][j] = num;
+                            this.UpdateCount(i,j,"",num);
+                            if( this.DFSGenerate(i+ parseInt( (j+1)/9) , (j+1)%9 ) ){
+                                return true;
+                            }
+                            this.square[i][j] = "";
+                            this.UpdateCount(i,j,num,"");
+                        }
+
+                        return false;
+                    }
+                    else{
+                        return this.DFSGenerate(i+ parseInt( (j+1)/9) , (j+1)%9 );
+                    }
+                },
+                DFSAns( i , j ){
+                    if( i == 9 ){
+                        return true;
+                    }
+                    if( this.AnsSquare[i][j] ){
+                        for( let num = 1;num<10;num++ ){
+                            //檢查是否有重複，不能使用isRepeat，因為用途不同，那是拿來檢測一整排的，效能差
+                            if( 
+                                this.RowCount[i][num]!=0 || 
+                                this.ColCount[j][num]!=0 || 
+                                this.SquareCount[parseInt(i / 3) * 3 + parseInt(j / 3)][num]!=0
+                            ){
+                                continue;
+                            }
+                            this.square[i][j] = num;
+                            this.UpdateCount(i,j,"",num);
+                            if( this.DFSGenerate(i+ parseInt( (j+1)/9) , (j+1)%9 ) ){
+                                return true;
+                            }
+                            this.square[i][j] = "";
+                            this.UpdateCount(i,j,num,"");
+                        }
+                        return false;
+                    }
+                    else{
+                        return this.DFSGenerate(i+ parseInt( (j+1)/9) , (j+1)%9 );
+                    }
+                },
+                Randon() {
+                    let num = this.ShuffleNum;
+                    let GenerateRepeat = true;
+                    let OriginNumArray = [1,2,3,4,5,6,7,8,9]
+                    let GenerateCount = 0;
+                    this.Randing = true; // 顯示轉圈效果
+
+
+
+                    this.$nextTick( () => {
+                        setTimeout(()=>{
+                            while( GenerateRepeat ){
+                                //清空Count
+                                this.RowCount = [...new Array(9)].map((arr) => {
+                                    return new Array(10).fill(0);
+                                }),
+                                this.ColCount = [...new Array(9)].map((arr) => {
+                                    return new Array(10).fill(0);
+                                }),
+                                this.SquareCount = [...new Array(9)].map((arr) => {
+                                    return new Array(10).fill(0);
+                                })
+
+                                //清空square
+                                this.square = [...new Array(9)].map(( arr )=>{
+                                    return new Array(9).fill("");
+                                })
+
+                                for(let i =0;i<3;i++){
+                                    let RandonNumArray = _.shuffle(OriginNumArray);
+                                    for(let j = 0;j<9;j++){
+                                        this.square[ i*3 + parseInt(j/3) ][ i*3 + (j%3) ] = RandonNumArray[j];
+                                        this.UpdateCount( 
+                                            i*3 + parseInt(j/3) , //i
+                                            i*3 + (j%3) , //j
+                                            "", //before_num
+                                            RandonNumArray[j] //after_num
+                                        );
+                                    }
+                                }
+                                GenerateRepeat = !(this.DFSGenerate(0,0));
+                            }
+                            this.AnsSquare = [...new Array(9)].map(()=>{
+                                return new Array(9).fill(0);
+                            })
+                            let ShuffleNum = this.ShuffleNum;
+                            while( ShuffleNum!=81 ){
+                                let rand_i = Math.round(Math.random()*8);
+                                let rand_j = Math.round(Math.random()*8);
+                                if( this.AnsSquare[rand_i][rand_j]==1 ){
+                                    continue;
+                                }
+                                this.AnsSquare[rand_i][rand_j] = 1;
+                                let num = this.square[rand_i][rand_j];
+                                this.UpdateCount(rand_i,rand_j,num , "");
+                                this.square[rand_i][rand_j] = "";
+                                ShuffleNum++;
+                            }
+
+                            this.Randing = false; // 關閉轉圈效果
+                            
+                        })
+
+
+                    })
+                }
+            }
+        }).mount("#app");
+
+
+    </script>
+</body>
+
+</html>
