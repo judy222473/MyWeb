@@ -43,7 +43,7 @@
 
         .orders .col-12 a{
             border:1px solid rgba(250, 208, 196,0.7) !important;
-            box-shadow: 20px 20px 40px 0px rgba(250, 208, 196,0.7);
+            box-shadow: 7px 7px 15px 10px rgba(250, 208, 196,0.7)
         }
         .order .img{
             display: flex;
@@ -71,12 +71,12 @@
 
 <body>
     <div id="app" class="p-xl-5 p-2 d-flex">
-        <div class="container border border-3 rounded-5 bg-white p-xl-3 p-2  ">
+        <div class="container border border-3 rounded-5 bg-white p-xl-3 p-2">
             <div class="row g-4 orders m-0 mb-auto">
                 <template v-for="(item,index) in items" :key="index">
                 <div class="col-12 col-xl-4 ">
-                    <a :href="item.link" class="w-100 h-100 d-block p-4 rounded-5 bg-white">
-                        <button class="w-100 h-100 border-0" >
+                    <a :href="item.link" class="w-100 h-100 d-block p-4 rounded-5 ">
+                        <button class="w-100 h-100 border-0 bg-white" >
                             <div class="order fs-4 "  >
                                 <div class="img">
                                     <i class="fa-2x text-orange" :class="item.img_class"></i>
