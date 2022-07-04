@@ -22,7 +22,8 @@
         html, body{height:100%;min-height: 100%;}
         #app {
             min-height: 100%;
-            background-image: linear-gradient(-225deg, #E3FDF5 0%, #FFE6FA 100%);        
+            background-color: #CDDCDC;
+            background-image: linear-gradient(-225deg, #E3FDF5 0%, #FFE6FA 100%);
         }
 
         .orders .col-12{
@@ -32,6 +33,7 @@
             transition-duration: 0.5s;
             transform: translateY(-20px);
         }
+
         .order{
             height: 100%;
             width: 100%;
@@ -42,8 +44,37 @@
         }
 
         .orders .col-12 a{
-            box-shadow: 0px 0px 10px 10px rgba(250, 208, 196,0.7)
+            box-shadow: 7px 7px 10px 0px rgba(250, 208, 196,0.7);
+            overflow:hidden;
         }
+        .orders .col-12:hover a::before{
+            
+
+            z-index: 5;
+            content: "";
+            position: absolute;
+            width: 1500px ;
+            height: 1500px;
+            top:0%;
+            left:0%;
+            border-radius: 2rem;
+            background-image: linear-gradient(to right, #ffc3a0 0%, #ffc3a0 100%);
+            animation-name:Shiny ;
+            animation-duration:2s ;
+            transform: rotate(-45deg)   translateY(-50%);
+
+        }
+        @keyframes Shiny{
+            0%{
+                transform: rotate(-45deg)  translateY(-125%);
+            }
+            100%{
+                transform: rotate(-45deg)  translateY(-50%);
+            }
+        }
+
+
+
         .order .img{
             display: flex;
             align-items: center;
@@ -57,7 +88,7 @@
 
         }
         .text-orange{
-            background: linear-gradient(to right, #ffc3a0 0%, #ffafbd 100%);
+            background-image: linear-gradient(to right, #ff8177 0%, #ff867a 0%, #ff8c7f 21%, #f99185 52%, #cf556c 78%, #b12a5b 100%);
             background: -webkit-linear-gradient(to right, #ffc3a0 0%, #ffafbd 100%);
             background-clip: text;
             -webkit-background-clip: text;
@@ -70,26 +101,30 @@
 
 <body>
     <div id="app" class="p-xl-5 p-2 d-flex">
-        <div class="container border border-3 rounded-5 bg-white p-xl-3 p-2">
+        <div class="container  rounded-5 bg-white bg-opacity-10 p-xl-3 p-2" style="box-shadow: 5px 5px 10px 0px #a1c4fd;">
             <div class="row g-4 orders m-0 mb-auto">
                 <template v-for="(item,index) in items" :key="index">
-                <div class="col-12 col-xl-4 ">
-                    <a :href="item.link" class="w-100 h-100 d-block p-4 rounded-5 ">
-                        <button class="w-100 h-100 border-0 bg-white" >
-                            <div class="order fs-4 "  >
-                                <div class="img">
-                                    <i class="fa-2x text-orange" :class="item.img_class"></i>
-                                </div>
-                                <div class="content" >
-                                    <div class="fs-2 text-orange" style="font-weight: 900;">{{ item.title }}</div>
-                                    <div class="fs-6 fw-lighter text-muted">
-                                        {{ item.content }}
+                <div class="col-12 col-xl-4  "  >
+                    <div class="w-100 h-100 rounded-5"  style="background-image: linear-gradient(to right, rgba(255, 195, 160,0.4) 0%, rgba(255, 175, 189,0.5) 100%);">
+                        <a :href="item.link" class="w-100 h-100 d-block p-4 rounded-5 position-relative">
+                            <button class="w-100 h-100 border-0 " style="background:transparent;">
+                                <div class="order fs-4 "  >
+                                    <div class="img" style="z-index:10 ;">
+                                        <i class="fa-2x text-orange" :class="item.img_class"></i>
                                     </div>
-    
+                                    <div class="content" style="z-index:10 ;">
+                                        <div class="fs-2 text-orange" style="font-weight: 900;">{{ item.title }}</div>
+                                        <div class="fs-6 fw-lighter text-muted">
+                                            {{ item.content }}
+                                        </div>
+        
+                                    </div>
                                 </div>
-                            </div>
-                        </button>
-                    </a>
+                            </button>
+                        </a>
+                    </div>
+
+
 
                 </div>
                 </template>
@@ -113,7 +148,12 @@
                             title:"數獨",
                             content:"能夠使用DFS產生非唯一解數獨，並且搭配Vue、Bootstrap、Lodash等套件實現功能",
                         },
-
+                        {
+                            img_class:{"fa-solid":true,"fa-9":true,},
+                            link:"./sudo.html",
+                            title:"數獨",
+                            content:"能夠使用DFS產生非唯一解數獨，並且搭配Vue、Bootstrap、Lodash等套件實現功能",
+                        },
 
                     ]
                 }
