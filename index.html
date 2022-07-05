@@ -39,13 +39,13 @@
             width: 100%;
             display: flex;
             flex-direction: column;
-            justify-content: center;
 
         }
 
         .orders .col-12 a{
-            box-shadow: 7px 7px 10px 0px rgba(250, 208, 196,0.7);
+            box-shadow: 7px 7px 15px 0px rgba(250, 208, 196,0.8);
             overflow:hidden;
+            text-decoration: none;
         }
         .orders .col-12:hover a::before{
             
@@ -80,62 +80,78 @@
             align-items: center;
             justify-content: center;
             height: 50px;
+            z-index:10;
         }
         .order .content{
-            margin:20px 0px auto 0px;
+            display: flex;
+            flex-direction: column;
+            margin:20px 0px 0px 0px;
             width: 100%;
-            color:rgba(250, 208, 196,1);
+            height:100%;
+            z-index:10;
 
         }
         .text-orange{
             background-image: linear-gradient(to right, #ff8177 0%, #ff867a 0%, #ff8c7f 21%, #f99185 52%, #cf556c 78%, #b12a5b 100%);
-            background: -webkit-linear-gradient(to right, #ffc3a0 0%, #ffafbd 100%);
+            background-image: -webkit-linear-gradient(to right, #ff8177 0%, #ff867a 0%, #ff8c7f 21%, #f99185 52%, #cf556c 78%, #b12a5b 100%);
             background-clip: text;
             -webkit-background-clip: text;
             color: transparent;
         }
-
+        .header{
+            width: 100%;
+            height: 75px;
+            box-shadow: 5px 5px 10px 0px #a1c4fd;
+        }
 
     </style>
 </head>
 
 <body>
-    <div id="app" class="p-xl-5 p-2 d-flex">
-        <div class="container  rounded-5 bg-white bg-opacity-10 p-xl-3 p-2" style="box-shadow: 5px 5px 10px 0px #a1c4fd;">
-            <div class="row g-4 orders m-0 mb-auto">
-                <template v-for="(item,index) in items" :key="index">
-                <div class="col-12 col-xl-4  "  >
-                    <div class="w-100 h-100 rounded-5"  style="background-image: linear-gradient(to right, rgba(255, 195, 160,0.4) 0%, rgba(255, 175, 189,0.5) 100%);">
-                        <a :href="item.link" class="w-100 h-100 d-block p-4 rounded-5 position-relative">
-                            <button class="w-100 h-100 border-0 " style="background:transparent;">
-                                <div class="order fs-4 "  >
-                                    <div class="img" style="z-index:10 ;">
+    <div id="app" class="d-flex flex-column">
+        <div class="header">
+
+        </div>
+        <div class ="container p-xl-5 p-3 d-flex flex-fill">
+            <div 
+                class ="rounded-5 bg-white bg-opacity-10 
+                        w-100 p-xl-3 p-2 " 
+                style="box-shadow: 5px 5px 10px 0px #a1c4fd;"
+            >
+                <div class="row g-4 orders m-0 ">
+                    <template v-for="(item,index) in items" :key="index">
+                    <div class="col-12 col-xl-4 my-2"  >
+                        <div class="w-100 h-100 rounded-5"  style="background-image: linear-gradient(to right, rgba(255, 195, 160,0.4) 0%, rgba(255, 175, 189,0.3) 100%);">
+                            <a :href="item.link" class="w-100 h-100 d-block p-4 rounded-5 position-relative">
+                                <div class="order fs-4"  >
+                                    <div class="img" >
                                         <i class="fa-2x text-orange" :class="item.img_class"></i>
                                     </div>
-                                    <div class="content" style="z-index:10 ;">
-                                        <div class="fs-2 text-orange" style="font-weight: 900;">{{ item.title }}</div>
+                                    <div class="content" >
+                                        <div class="fs-2 text-orange text-center" style="font-weight: 900;">{{ item.title }}</div>
+
                                         <div class="fs-6 fw-lighter text-muted">
                                             {{ item.content }}
                                         </div>
-        
+                                        <div class="fs-6 fw-lighter text-muted mt-auto ms-auto d-flex">
+                                            {{ item.date }}
+                                        </div>
                                     </div>
                                 </div>
-                            </button>
-                        </a>
+                            </a>
+                        </div>
                     </div>
-
+                    </template>
 
 
                 </div>
-                </template>
+
+
 
 
             </div>
-
-
-
-
         </div>
+
     </div>
     <script>
         Vue.createApp({
@@ -146,13 +162,15 @@
                             img_class:{"fa-solid":true,"fa-9":true,},
                             link:"./sudo.html",
                             title:"數獨",
+                            date:"Made By 7/3",
                             content:"能夠使用DFS產生非唯一解數獨，並且搭配Vue、Bootstrap、Lodash等套件實現功能",
                         },
                         {
-                            img_class:{"fa-solid":true,"fa-9":true,},
-                            link:"./sudo.html",
-                            title:"數獨",
-                            content:"能夠使用DFS產生非唯一解數獨，並且搭配Vue、Bootstrap、Lodash等套件實現功能",
+                            img_class:{"fa-solid":true,"fa-gauge-high":true,},
+                            link:"./dejavu.html",
+                            title:"CSS儀表板",
+                            date:"Made By 7/6",
+                            content:"使用CSS偽類再搭配一系列的絕對定位還有Vue完成此功能",
                         },
 
                     ]

@@ -124,19 +124,19 @@
 
             <div class="d-flex justify-content-center align-items-center position-relative w-100">
                 <div class="p-1 d-flex">
-                    <button class="btn btn-primary fw-semibold w-100" @click="Randon()">
+                    <button class="btn btn-primary fw-semibold w-100 rounded-4" @click="Randon()">
                         Generate
                     </button>
                 </div>
 
-                <div class="p-1 d-flex" >
-                    <select v-model="ShuffleNum" class="form-select mx-auto">
+                <div class="p-1 d-flex " >
+                    <select v-model="ShuffleNum" class="form-select mx-auto rounded-4">
                         <option v-for="i in 55" :value="27+(i-1)">{{ 27+(i-1) }}</option>
                     </select>
                 </div>
              
                 <div class="p-1 d-flex">
-                    <button class="btn btn-success fw-semibold w-100" @click="CaculateAns()">
+                    <button class="btn btn-success fw-semibold w-100 rounded-4" @click="CaculateAns()">
                         Answer
                     </button>
                 </div>
@@ -193,9 +193,9 @@
                 </template>
             </div>
             <div class="d-flex justify-content-center align-items-center mt-4">
-                <a href="./index.html"  class="mx-1"><button class="btn btn-dark fw-semibold">Back</button></a>
+                <a href="./index.html"  class="mx-1"><button class="btn btn-dark fw-semibold rounded-4">Back</button></a>
                 <button 
-                    class="btn btn-info mx-1 fw-semibold"  
+                    class="btn btn-info mx-1 fw-semibold rounded-4"  
                     data-bs-toggle="modal" data-bs-target="#Help"
                 >
                     Info
