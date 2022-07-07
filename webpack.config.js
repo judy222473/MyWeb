@@ -35,7 +35,6 @@ module.exports = {
 
     devtool: false,
     plugins:[
-        new webpack.SourceMapDevToolPlugin({}),
         new webpack.ProgressPlugin(),
         new MiniCssExtractPlugin({
             filename:"./css/[name].css"
