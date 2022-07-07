@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>sudo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
+
+<script defer src=".././Js/sudo.js"></script><link href=".././css/sudo.css" rel="stylesheet"></head>
+
+<body>
+    <div id="app">
+        <div class="
+            d-flex flex-column justify-content-center align-items-center
+            col-12 col-sm-10 col-md-8 col-lg-5 col-xl-4
+            py-2
+        ">
+
+
+            <div class="d-flex justify-content-center align-items-center position-relative w-100">
+                <div class="p-1 d-flex">
+                    <button class="btn btn-primary fw-semibold w-100 rounded-4" @click="Randon()">
+                        Generate
+                    </button>
+                </div>
+
+                <div class="p-1 d-flex " >
+                    <select v-model="ShuffleNum" class="form-select mx-auto rounded-4">
+                        <option v-for="i in 55" :value="27+(i-1)">{{ 27+(i-1) }}</option>
+                    </select>
+                </div>
+             
+                <div class="p-1 d-flex">
+                    <button class="btn btn-success fw-semibold w-100 rounded-4" @click="CaculateAns()">
+                        Answer
+                    </button>
+                </div>
+
+
+
+            </div>
+
+            <div class="square my-2 position-relative w-100">
+                
+                <div class="h-100 w-100 position-absolute ShuffleLoading" style="display: flex;" v-show="Randing">
+                    <div 
+                        class="spinner-border text-primary mx-auto my-auto" 
+                        role="status"
+                    >
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>   
+                <template v-for="i in 3">
+                    <div class="bit-wrapper" v-for="j in 3">
+                        <template v-for="k in 9">
+                                <div class="bit-outer bit-hover bit-focus">
+                                    <select 
+                                        class="bit-select"
+                                        :value="square[ (i-1)*3 + (((k-1)/3) | 0 ) ][ (j-1)*3 + ((k-1)%3) ]"
+                                        @change="SudoChange(i , j , k , $event.target.value)"
+                                        v-if="AnsSquare[ (i-1)*3 + (((k-1)/3) | 0 ) ][ (j-1)*3 + ((k-1)%3) ]"
+                                    >
+                                        <option></option>
+
+                                        <option v-for="m in 9" :value.number="m" >{{ m }}</option>
+                                    <select>
+                                    <div 
+                                        class="bit-div " 
+                                        :class="{
+                                            'ErrorAns':IsRepeat( (i-1)*3 + (((k-1)/3) | 0 ) , (j-1)*3 + ((k-1)%3) ) ,
+                                            'AnsSquare':AnsSquare[ (i-1)*3 + (((k-1)/3) | 0 ) ][ (j-1)*3 + ((k-1)%3) ] ,
+                                        }"
+                                    >
+                                        {{ square[ (i-1)*3 + (((k-1)/3) | 0 ) ][ (j-1)*3 + ((k-1)%3) ] }}
+                                    </div>
+
+
+
+                                </div>
+
+
+
+
+                        </template>
+
+
+                    </div>
+                </template>
+            </div>
+            <div class="d-flex justify-content-center align-items-center mt-4">
+                <a href="./index.html"  class="mx-1"><button class="btn btn-dark fw-semibold rounded-4">Back</button></a>
+                <button 
+                    class="btn btn-info mx-1 fw-semibold rounded-4"  
+                    data-bs-toggle="modal" data-bs-target="#Help"
+                >
+                    Info
+                </button>
+            </div>
+        </div>
+
+
+
+        <!-- Modal -->
+        <div class="modal modal-sm fade" id="Win" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="WinLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header ">
+                        <h5 class="modal-title fw-semibold fs-4" id="WinLabel">Tip</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body ">
+                        <span class="text-success fs-5">Win!</span>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="Help" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="HelpLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header ">
+                        <h5 class="modal-title fw-semibold fs-4" id="HelpLabel">Introduction</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body ">
+                        <div class="alert alert-warning" role="alert">
+                            此數獨不保證一定唯一解
+                        </div>
+                        <div class="row g-2 my-2">
+                            <div class="col-4 d-flex">
+                                <button class="btn btn-primary fw-semibold mx-auto  w-100">
+                                    Generate
+                                </button>
+                            </div>
+                            <div class="col flex-text-center">
+                                <span class="fs-6 fw-semibold  text-muted">隨機產生數獨</span>
+                            </div>
+                        </div>
+                        <div class="row g-2 my-2">
+                            <div class="col-4">
+                                <select class="form-select ">
+                                    <option v-for="i in 55" :value="27+(i-1)">{{ 27+(i-1) }}</option>
+                                </select>
+                            </div>
+                            <div class="col flex-text-center">
+                                <span class="fs-6 fw-semibold  text-muted">產生（留有）幾個字的數獨</span>
+                            </div>
+                        </div>
+                        <div class="row g-2 my-2">
+                            <div class="col-4 d-flex">
+                                <button class="btn btn-success fw-semibold  mx-auto w-100">
+                                    Answer
+                                </button>
+                            </div>
+                            <div class="col flex-text-center">
+                                <span class="fs-6 fw-semibold  text-muted">計算出當前數獨的答案( 已填答案會被蓋掉 )</span>
+                            </div>
+                        </div>
+                        <hr>
+                        <div>
+                            <div class="fs-5 fw-semibold">使用步驟</div>
+                            <div class="fs-6 fw-semibold text-muted">Step1. 調整需要（留下）的數字數量</div>
+                            <div class="fs-6 fw-semibold text-muted">Step2. 按下Generate產生數獨</div>
+                            <div class="fs-6 fw-semibold text-muted">Step3. GameStart</div>
+
+                        </div>
+                        <hr>
+                        <div class="fs-5 fw-semibold">
+                            Library
+                        </div>
+                        <div class="row g-2 my-2">
+                            <div class="col flex-text-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="currentColor" class="bi bi-bootstrap-fill"
+                                    style="color: rgb(113, 44, 249);" viewBox="0 0 16 16">
+                                    <path
+                                        d="M6.375 7.125V4.658h1.78c.973 0 1.542.457 1.542 1.237 0 .802-.604 1.23-1.764 1.23H6.375zm0 3.762h1.898c1.184 0 1.81-.48 1.81-1.377 0-.885-.65-1.348-1.886-1.348H6.375v2.725z" />
+                                    <path
+                                        d="M4.002 0a4 4 0 0 0-4 4v8a4 4 0 0 0 4 4h8a4 4 0 0 0 4-4V4a4 4 0 0 0-4-4h-8zm1.06 12V3.545h3.399c1.587 0 2.543.809 2.543 2.11 0 .884-.65 1.675-1.483 1.816v.1c1.143.117 1.904.931 1.904 2.033 0 1.488-1.084 2.396-2.888 2.396H5.062z" />
+                                </svg>
+                                <span class="text-muted fs-6 fw-semibold mx-2">Bootstrap</span>
+                            </div>
+                        
+                            <div class="col flex-text-center">
+                                <svg width="36" height="36" viewBox="0 0 256 233" xmlns="http://www.w3.org/2000/svg"
+                                    preserveAspectRatio="xMinYMin meet">
+                                    <g fill="none" fill-rule="evenodd">
+                                        <path
+                                            d="M.388 0H24.18v157.893h94.087v19.466H.387V0zM183.154 46.503c16.222-2.163 33.526 1.081 46.503 11.896 14.06 9.733 21.63 27.036 22.71 43.258 2.164 19.466 0 38.933-10.814 55.155-9.733 12.977-24.873 21.629-42.177 22.71-16.222 2.163-34.606-1.081-48.665-11.896-12.978-10.814-19.467-27.036-21.63-43.258-2.162-17.304 0-36.77 10.815-51.91 8.652-15.14 25.955-24.874 43.258-25.955zm3.245 18.385c10.814-1.082 22.71 2.162 31.362 9.733 7.57 8.651 11.896 19.466 12.978 30.28 1.081 11.897 0 24.874-5.408 35.689-5.407 10.814-15.14 18.385-27.036 20.547-10.815 2.163-22.71-1.081-30.281-7.57-8.652-6.489-14.059-16.222-16.222-25.955-2.163-14.059-1.081-28.118 4.326-41.095 5.407-11.896 17.303-20.548 30.28-21.63z"
+                                            fill="#000" />
+                                        <path d="M.388 205.477h255.224v27.037H.388v-27.037z" fill="#3492FF" />
+                                    </g>
+                                </svg>
+                                <span class="text-muted fs-6 fw-semibold mx-2">Lodash</span>
+                            </div>
+                        
+                            <div class="col flex-text-center">
+                                <svg width="36" height="36" viewBox="0 0 256 221" version="1.1" xmlns="http://www.w3.org/2000/svg"
+                                    xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMid">
+                                    <g>
+                                        <path d="M204.8,0 L256,0 L128,220.8 L0,0 L50.56,0 L97.92,0 L128,51.2 L157.44,0 L204.8,0 Z"
+                                            fill="#41B883"></path>
+                                        <path d="M0,0 L128,220.8 L256,0 L204.8,0 L128,132.48 L50.56,0 L0,0 Z" fill="#41B883"></path>
+                                        <path d="M50.56,0 L128,133.12 L204.8,0 L157.44,0 L128,51.2 L97.92,0 L50.56,0 Z" fill="#35495E"></path>
+                                    </g>
+                                </svg>
+                                <span class="text-muted fs-6 fw-semibold mx-2">Vue</span>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="fs-5 fw-semibold my-2">
+                            Reference
+                        </div>
+                        <a href="https://lifeni.life/article/algorithm-sudoku/" class="fs-6 text-primary fw-semibold text-decoration-none">
+                            Sudoku-DFS生成與求解
+                        </a>
+                        
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+    <script>
+
+
+
+    </script>
+</body>
+
+</html>

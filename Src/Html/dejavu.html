@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="zh-tw">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title><%= htmlWebpackPlugin.options.title %></title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+</head>
+  <body>
+    <div id="app" class="d-flex">
+        <div class="container d-flex">
+            <div class="dashboard m-auto">
+                    <div class="circle-middle"></div>
+                    <div class="half-circle"></div>
+                    <div 
+                        v-for="num in 17"
+                        class="scale-big"
+                        :key="num"
+                        :style="{transform:`rotate(${90-10*num}deg) translateY(10px) translateY(-140px)`}"
+                    >
+                    </div>
+                    <div 
+                        v-for="num in 53"
+                        class="scale-small"
+                        :key="num"
+                        :style="{transform:`rotate(${90-(10/3)*num}deg) translateY(5px) translateY(-140px)`}"
+                    >
+                    </div>
+                    <a href="./index.html" >
+                        <button class="btn btn-dark fw-semibold rounded-4">Back</button>
+                    </a>
+
+            </div>
+        </div>
+    </div>
+
+  </body>
+</html>
