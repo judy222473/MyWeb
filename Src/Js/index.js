@@ -24,6 +24,19 @@ createApp({
 
             ]
         }
+    },
+    methods:{
+        shirk(){
+            console.log(document.querySelector(".collapse-wrapper").style.maxHeight)
+            let maxHeight = document.querySelector(".collapse-wrapper").style.maxHeight;
+            if( maxHeight =="0px" || maxHeight =="" ){
+                document.querySelector(".collapse-wrapper").style.maxHeight="300px";
+            }
+            else{
+                document.querySelector(".collapse-wrapper").style.maxHeight="0px";
+
+            }
+        }
     }
 }).mount("#app");
 

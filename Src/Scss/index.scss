@@ -1,9 +1,13 @@
-
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" );
 *{
     padding: 0px;
     margin: 0px;
     box-sizing: border-box;
-    font-family: 'Noto Sans TC', sans-serif;
+    list-style: none;
+    font-family: 'Roboto','Noto Sans TC', sans-serif;
+}
+a{
+    text-decoration: none;
 }
 html, body{height:100%;min-height: 100%;}
 #app {
@@ -26,6 +30,7 @@ html, body{height:100%;min-height: 100%;}
     }
     .intro-content{
         position: relative;
+
         div{
             display: flex;
             align-items: center;
@@ -33,6 +38,7 @@ html, body{height:100%;min-height: 100%;}
             line-height: 45px;
 
         }
+
         & div:first-child::before{
             content:"";
             position: absolute;
@@ -44,7 +50,7 @@ html, body{height:100%;min-height: 100%;}
             top:0px;
             left:0px;
             transform: translateX(-20px);
-            animation: LineGrow 1.5s ;
+            animation: LineGrow 1.5s infinite alternate;
         }
         & div:last-child::before{
             content:"";
@@ -57,14 +63,77 @@ html, body{height:100%;min-height: 100%;}
             bottom:0px;
             right:0px;
             transform: translateX(20px);
-            animation: LineGrow 1.5s ;
+            animation: LineGrow 1.5s infinite alternate;
         }
+    }
+    button{
+        background-image: linear-gradient(to right, #74ebd5 0%, #9face6 100%);
+        background-size: 200%;
+        background-position:0% ;
+        background-repeat: no-repeat;
+        animation: neon 1s linear infinite alternate;
+        position:relative;
+        z-index: 0;
+        font-weight: 700;
+        border: 0px solid black;
+        padding: 8px 18px;
+        color:aliceblue;
+        &:hover{
+            transform: translateY(-5px);
+            transition: transform 0.25s;
+            background-image: linear-gradient(120deg, #f6d365 0%, #fda085 100%);
+            &::before{
+                background-image: linear-gradient(120deg, #f6d365 0%, #fda085 100%);
+
+            }
+        }
+        &::before{
+            content:"";
+            width: 100%;
+            height: 100%;
+            position:absolute;
+            top: 0px;
+            left:0px;
+            filter: blur(20px);
+            z-index: -1;
+
+            background: linear-gradient(to right, #74ebd5 0%, #9face6 100%);
+            background-size: 200%;
+            border-radius: 2rem;
+            background-position:0% ;
+            background-repeat: no-repeat;
+            animation: neon-filter 1s linear infinite alternate;
+
+        }
+    }
+
+}
+@keyframes neon-filter{
+    0%{
+        background-position: 0%;
+        filter: blur(0px);
+    }
+
+    100%{
+        background-position: 100%;
+        filter: blur(20px);
+
+    }
+}
+@keyframes neon{
+    0%{
+        background-position: 0%;
+    }
+
+    100%{
+        background-position: 100%;
     }
 }
 @keyframes LineGrow{
     0%{
         width: 0%;
     }
+
     100%{
         width: calc(100% + 40px);
     }
@@ -152,6 +221,53 @@ html, body{height:100%;min-height: 100%;}
 }
 .header{
     width: 100%;
-    height: 75px;
     box-shadow: 5px 5px 10px 0px #a1c4fd;
+    overflow: hidden;
+    .header-brand{
+        display: flex;
+        align-items: center;
+        span{
+            font-size: 36px;
+
+        }
+
+    }
+    button{
+        i{
+            font-size: 28px;
+        }
+    }
+    .header-bar{
+        min-height: 75px;
+        width: 100%;
+        display: flex;
+        align-items: center;
+
+    }
+    .collapse-wrapper{
+        display: flex;
+        max-height: 0px;
+        transition: max-height 1s ease;
+        flex-basis: 100%;
+        overflow: auto;
+        margin: 0px;
+        li{
+            line-height: 50px;
+            font-size: 18px;
+            padding: 0px 5px;
+            align-self: stretch;
+        }
+        
+        @media  (min-width: 992px){
+            &{
+                max-height: 50px !important;
+                flex-basis: auto;
+
+            }
+        
+        }
+    }
+
+
 }
+

@@ -5,13 +5,28 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><%= htmlWebpackPlugin.options.title %></title>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/a5930103ea.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
     <div id="app" class="d-flex flex-column">
         <div class="header">
+            <div class="header-bar p-3 flex-wrap container">
+                <div class="header-brand">
+                    <span class="fw-bolder text-blue">MyWeb</span>
+                </div>
+                <button class="d-lg-none ms-auto  btn btn-primary"  @click="shirk()" >
+                    <i class="fa-solid fa-bars fa-2x"></i>
+                </button>
+                <ul class="collapse-wrapper d-flex flex-column flex-lg-row" >
+                    <li><a href="#">test</a></li>
+                    <li><a href="#">test</a></li>
+                    <li><a href="#">test</a></li>
+                    <li><a href="#">test</a></li>
+                    <li><a href="#">test</a></li>
+    
+                </ul>
+            </div>
 
         </div>
         <div class="intro-wraper">
@@ -31,12 +46,12 @@
                         </g>
                     </svg>
                 </div>
-                <div class="col-12 col-xl-4  flex-column fs-2 fw-bolder">
+                <div class="col-12 col-xl-5  flex-column fs-2 fw-bolder">
                     <span class="intro-content  text-blue py-3">
                         <div>本網站有使用Webpack</div>
                         <div>所以程式碼看起來可能髒髒的</div>
                     </span>
-
+                    <button class="mt-4 rounded-5 fs-5">What is Webpack</button>
                 </div>
             </div>
         </div>
@@ -58,10 +73,10 @@
                                     <div class="content" >
                                         <div class="fs-2 text-orange text-center" style="font-weight: 900;">{{ item.title }}</div>
 
-                                        <div class="fs-6 fw-lighter text-muted">
+                                        <div class="fs-6 fw-light text-muted">
                                             {{ item.content }}
                                         </div>
-                                        <div class="fs-6 fw-lighter text-muted mt-auto ms-auto d-flex">
+                                        <div class="fs-6 fw-light text-muted mt-auto ms-auto d-flex">
                                             {{ item.date }}
                                         </div>
                                     </div>
