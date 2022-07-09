@@ -1,0 +1,103 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&family=Roboto+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" );
+*{
+    padding: 0px;
+    margin: 0px;
+    box-sizing: border-box;
+    list-style: none;
+    font-family: 'Roboto Mono','Noto Sans TC', sans-serif;
+}
+a{
+    text-decoration: none;
+}
+html, body{height:100%;min-height: 100%;}
+#app {
+    min-height: 100%;
+    background:#224;
+}
+.CardWrapper{
+    .Card{
+        background:midnightblue;
+        position: relative;
+        overflow: hidden;
+        text-transform:uppercase;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 6px 12px;
+        div{
+        }
+        span{
+            position: absolute;
+        }
+        span:nth-child(1){
+            width: 100%;
+            height: 2.5px;
+            top:0%;
+            left:-100%;
+            background-image: linear-gradient(90deg, rgba(137, 247, 254,0.1) 0%, rgb(137, 247, 254) 100%);
+            animation: Light1 1s linear infinite;
+        }
+        @keyframes Light1 {
+            0%{
+                left:-100%;
+            }
+            50%,100%{
+                left:100%;
+            }
+        }
+        span:nth-child(2){
+            width: 2.5px;
+            height: 100%;
+            top:-100%;
+            right:0%;        
+            background-image: linear-gradient(180deg, rgba(137, 247, 254,0.1) 0%, rgb(137, 247, 254) 100%);
+            animation: Light2 1s linear infinite;
+            animation-delay: 0.25s;
+        }
+        @keyframes Light2 {
+            0%{
+                top:-100%;
+            }
+            50%,100%{
+                top:100%;
+            }
+        }
+        span:nth-child(3){
+            width: 100%;
+            height: 2.5px;
+            bottom:0%;
+            right:-100%;
+            background-image: linear-gradient(270deg, rgba(137, 247, 254,0.1) 0%, rgb(137, 247, 254) 100%);
+            animation: Light3 1s linear infinite;
+            animation-delay: 0.5s;
+
+        }
+        @keyframes Light3 {
+            0%{
+                right:-100%;
+            }
+            50%,100%{
+                right:100%;
+            }
+        }
+        span:nth-child(4){
+            width: 2.5px;
+            height: 100%;
+            bottom:-100%;
+            left:0%;
+            background-image: linear-gradient(0deg, rgba(137, 247, 254,0.1) 0%, rgb(137, 247, 254) 100%);
+            animation: Light4 1s linear infinite;
+
+            animation-delay: 0.75s;
+
+        }
+        @keyframes Light4 {
+            0%{
+                bottom:-100%;
+            }
+            50%,100%{
+                bottom:100%;
+            }
+        }
+    }
+}

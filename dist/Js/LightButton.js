@@ -25803,10 +25803,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./Src/Scss/index.scss":
-/*!*****************************!*\
-  !*** ./Src/Scss/index.scss ***!
-  \*****************************/
+/***/ "./Src/Scss/LightButton.scss":
+/*!***********************************!*\
+  !*** ./Src/Scss/LightButton.scss ***!
+  \***********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
@@ -26115,15 +26115,14 @@ function compileToFunction(template, options) {
 var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
 (() => {
-/*!*************************!*\
-  !*** ./Src/Js/index.js ***!
-  \*************************/
+/*!*******************************!*\
+  !*** ./Src/Js/LightButton.js ***!
+  \*******************************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var bootstrap_dist_css_bootstrap_min_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! bootstrap/dist/css/bootstrap.min.css */ "./node_modules/bootstrap/dist/css/bootstrap.min.css");
 /* harmony import */ var bootstrap__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! bootstrap */ "./node_modules/bootstrap/dist/js/bootstrap.esm.js");
-/* harmony import */ var _Scss_index_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Scss/index.scss */ "./Src/Scss/index.scss");
+/* harmony import */ var _Scss_LightButton_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Scss/LightButton.scss */ "./Src/Scss/LightButton.scss");
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
-
 
 
 
@@ -26133,51 +26132,10 @@ __webpack_require__.r(__webpack_exports__);
 (0,vue__WEBPACK_IMPORTED_MODULE_3__.createApp)({
     data(){
         return{
-            items:[
-                {
-                    img_class:{"fa-solid":true,"fa-9":true,},
-                    link:"./sudo.html",
-                    title:"數獨",
-                    date:"Made By 2022/7/3",
-                    content:"能夠使用DFS產生非唯一解數獨，並且搭配Vue、Bootstrap、Lodash等套件實現功能",
-                },
-                {
-                    img_class:{"fa-solid":true,"fa-gauge-high":true,},
-                    link:"./dejavu.html",
-                    title:"CSS儀表板",
-                    date:"Made By 2022/7/6",
-                    content:"使用CSS偽類再搭配一系列的絕對定位還有Vue完成此功能",
-                },
-                {
-                    img_class:{"fa-solid":true,"fa-wand-magic-sparkles":true,},
-                    link:"./MagicCard.html",
-                    title:"CSS魔法卡",
-                    date:"Made By 2022/7/9",
-                    content:"練習blur和z-index的應用，臨摹CodePen上的專案",
-                },
-                {
-                    img_class:{"fa-solid":true,"fa-wand-magic-sparkles":true,},
-                    link:"./LightButton.html",
-                    title:"CSS光流特效",
-                    date:"Made By 2022/7/9",
-                    content:"練習特效，臨摹CodePen上的專案",
-                },
-            ]
+
         }
     },
-    methods:{
-        shirk(){
-            console.log(document.querySelector(".collapse-wrapper").style.maxHeight)
-            let maxHeight = document.querySelector(".collapse-wrapper").style.maxHeight;
-            if( maxHeight =="0px" || maxHeight =="" ){
-                document.querySelector(".collapse-wrapper").style.maxHeight="300px";
-            }
-            else{
-                document.querySelector(".collapse-wrapper").style.maxHeight="0px";
 
-            }
-        }
-    }
 }).mount("#app");
 
 

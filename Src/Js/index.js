@@ -1,4 +1,6 @@
 import bootstrapCss from "bootstrap/dist/css/bootstrap.min.css"
+import {Modal} from "bootstrap"
+
 import scss from "../Scss/index.scss"
 
 import { createApp } from 'vue'
@@ -21,7 +23,20 @@ createApp({
                     date:"Made By 2022/7/6",
                     content:"使用CSS偽類再搭配一系列的絕對定位還有Vue完成此功能",
                 },
-
+                {
+                    img_class:{"fa-solid":true,"fa-wand-magic-sparkles":true,},
+                    link:"./MagicCard.html",
+                    title:"CSS魔法卡",
+                    date:"Made By 2022/7/9",
+                    content:"練習blur和z-index的應用，臨摹CodePen上的專案",
+                },
+                {
+                    img_class:{"fa-solid":true,"fa-wand-magic-sparkles":true,},
+                    link:"./LightButton.html",
+                    title:"CSS光流特效",
+                    date:"Made By 2022/7/9",
+                    content:"練習特效，臨摹CodePen上的專案",
+                },
             ]
         }
     },

@@ -51,7 +51,12 @@
                         <div>本網站有使用Webpack</div>
                         <div>所以程式碼看起來可能髒髒的</div>
                     </span>
-                    <button class="mt-4 rounded-5 fs-5">What is Webpack</button>
+                    <button 
+                        class="mt-4 rounded-5 fs-5"
+                        data-bs-toggle="modal" data-bs-target="#Webpack"
+                    >
+                    What is Webpack
+                    </button>
                 </div>
             </div>
         </div>
@@ -63,7 +68,7 @@
             >
                 <div class="row g-4 orders m-0 ">
                     <template v-for="(item,index) in items" :key="index">
-                    <div class="col-12 col-xl-4 my-2"  >
+                    <div class="col-12 col-xl-4 my-4"  >
                         <div class="w-100 h-100 rounded-5"  style="background-image: linear-gradient(to right, rgba(255, 195, 160,0.4) 0%, rgba(255, 175, 189,0.3) 100%);">
                             <a :href="item.link" class="w-100 h-100 d-block p-4 rounded-5 position-relative">
                                 <div class="order fs-4"  >
@@ -94,7 +99,38 @@
 
             </div>
         </div>
+        <!-- Modal -->
+        <div class="modal fade" id="Webpack" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="WebpackLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header ">
+                        <h5 class="modal-title fw-semibold fs-4" id="WinLabel">功能介紹</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body fs-6 ">
+                        <p class="fs-5 fw-semibold text-primary">Q：為甚麼要用Webpack</p>
+                        <div class="fs-6 text-muted">
+                            <p>1. 能夠使用預處理器編譯(SASS、Vue SFC、TypeScript)，以及程式碼壓縮或照片壓縮</p>
+                            <p>2. 能夠使用import方便將JS檔案做模組化(因為瀏覽器不支援import語句)</p>
+                        </div>
+                        <hr>
+                        <p class="fs-5 fw-semibold text-dark">官網</p>
+                        <div class="d-flex flex-column">
+                            <span><a href="https://webpack.js.org/">Webpack官網</a></span>
+                            <span><a href="https://sass-lang.com/">Sass官網</a></span>
+                            <span><a href="https://vuejs.org/">Vue官網</a></span>
+                            <span><a href="https://www.typescriptlang.org/">TypeScript官網</a></span>
+                        </div>
+                        <hr>
+                        <p class="fs-5 fw-semibold text-dark">網路上的說明</p>
+                        <div>
+                            <a href="https://ithelp.ithome.com.tw/articles/10209683">It邦幫忙</a>
+                        </div>
 
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
 </body>
