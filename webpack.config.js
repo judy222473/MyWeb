@@ -34,7 +34,11 @@ module.exports = {
             vue: "vue/dist/vue.esm-bundler.js",
         }
     },
-
+    optimization: {
+        splitChunks: {
+            chunks: 'all',
+        },
+    },
     devtool: false,
     plugins:[
         new webpack.ProgressPlugin(),
